@@ -27,3 +27,6 @@
 {"cell": "lip30-p250-caseoff", "ok": true, "error": null, "stand_g": 150.11, "overlaps": 0, "combined_com": [100.0, 9.232668861818578, 56.674832182558504]}
 {"cell": "lip35-p190-caseoff", "ok": true, "error": null, "stand_g": 150.11, "overlaps": 0, "combined_com": [100.00000000000001, 15.599972365182825, 49.022025549688145]}
 {"cell": "lip35-p250-caseoff", "ok": true, "error": null, "stand_g": 150.11, "overlaps": 0, "combined_com": [100.0, 12.017622083345204, 56.674832182558504]}
+{"cell": "lip40-p165", "ok": true, "error": null, "stand_g": 155.83, "overlaps": 0, "combined_com": [100.00000000000001, 22.306551231558092, 47.79648686772759]}
+{"cell": "lip40-p210", "ok": true, "error": null, "stand_g": 155.83, "overlaps": 0, "combined_com": [99.99999999999999, 21.586272392458795, 51.68074710734586]}
+{"cell": "lip40-p210-caseoff", "ok": true, "error": null, "stand_g": 150.11, "overlaps": 0, "combined_com": [100.0, 17.56466561972489, 50.55393215199483]}
