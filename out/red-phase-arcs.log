@@ -1,0 +1,93 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+__________________ test_an_arc_bead_sits_at_the_arc_centroid ___________________
+
+    def test_an_arc_bead_sits_at_the_arc_centroid():
+        # a counter-clockwise quarter circle (G3) of radius 10 about (0, 0), from (10, 0) to (0, 10): the centroid of the
+        # curve is r sin(h)/h from the centre along the bisector, h = half the sweep
+        g = """M83
+    G1 Z0.2
+    G1 X10 Y0
+    G3 X0 Y10 I-10 J0 E2.0
+    """
+>       r = G.mass_and_centre(g, density=1.0, diameter=1.75)
+
+tests/test_gcode_mass.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'M83\nG1 Z0.2\nG1 X10 Y0\nG3 X0 Y10 I-10 J0 E2.0\n', density = 1.0
+diameter = 1.75, from_first_layer = False
+
+    def mass_and_centre(text, density=1.24, diameter=1.75, from_first_layer=False):
+        area = math.pi * (diameter / 2) ** 2
+        rel = False
+        x = y = z = 0.0
+        e = 0.0
+        total = 0.0
+        sx = sy = sz = 0.0
+        started = not from_first_layer
+        for raw in text.splitlines():
+            line = raw.split(';', 1)[0].strip()
+            if raw.startswith(';LAYER_CHANGE'):
+                started = True
+            if not line:
+                continue
+            cmd = line.split()[0]
+            if cmd == 'M83':
+                rel = True
+                continue
+            if cmd == 'M82':
+                rel = False
+                continue
+            if cmd in ('G2', 'G3'):
+>               raise ValueError('arc moves (G2/G3) are not handled: slice with arc fitting off')
+E               ValueError: arc moves (G2/G3) are not handled: slice with arc fitting off
+
+tip/gcode_mass.py:36: ValueError
+________________ test_a_clockwise_arc_goes_the_other_way_round _________________
+
+    def test_a_clockwise_arc_goes_the_other_way_round():
+        # G2 from (10, 0) to (0, 10) about (0, 0) is the long way: three quarters, clockwise, through (0, -10) and (-10, 0)
+        g = """M83
+    G1 Z0.2
+    G1 X10 Y0
+    G2 X0 Y10 I-10 J0 E2.0
+    """
+>       r = G.mass_and_centre(g, density=1.0, diameter=1.75)
+
+tests/test_gcode_mass.py:90: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+text = 'M83\nG1 Z0.2\nG1 X10 Y0\nG2 X0 Y10 I-10 J0 E2.0\n', density = 1.0
+diameter = 1.75, from_first_layer = False
+
+    def mass_and_centre(text, density=1.24, diameter=1.75, from_first_layer=False):
+        area = math.pi * (diameter / 2) ** 2
+        rel = False
+        x = y = z = 0.0
+        e = 0.0
+        total = 0.0
+        sx = sy = sz = 0.0
+        started = not from_first_layer
+        for raw in text.splitlines():
+            line = raw.split(';', 1)[0].strip()
+            if raw.startswith(';LAYER_CHANGE'):
+                started = True
+            if not line:
+                continue
+            cmd = line.split()[0]
+            if cmd == 'M83':
+                rel = True
+                continue
+            if cmd == 'M82':
+                rel = False
+                continue
+            if cmd in ('G2', 'G3'):
+>               raise ValueError('arc moves (G2/G3) are not handled: slice with arc fitting off')
+E               ValueError: arc moves (G2/G3) are not handled: slice with arc fitting off
+
+tip/gcode_mass.py:36: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_gcode_mass.py::test_an_arc_bead_sits_at_the_arc_centroid - ...
+FAILED tests/test_gcode_mass.py::test_a_clockwise_arc_goes_the_other_way_round
+2 failed, 3 passed in 0.11s

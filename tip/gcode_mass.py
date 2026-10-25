@@ -1,6 +1,7 @@
 """Mass and balance point of a print from its G-code: every extruding G0/G1 move lays a bead whose mass is the filament
 length pushed times the filament's cross-section times its density, placed at the move's midpoint. Retractions
-(E without XY motion) and travel moves lay nothing. Arcs (G2/G3) are refused: the lab slices with arc fitting off.
+(E without XY motion) and travel moves lay nothing. Arcs (G2/G3, I/J form, as PrusaSlicer's arc fitting writes them)
+place their bead at the arc's centroid, r sin(h)/h from the centre along the bisector (h = half the sweep).
 
     python3 -m tip.gcode_mass FILE.gcode [density] [diameter]   -> JSON"""
 import json
@@ -19,6 +20,7 @@ def mass_and_centre(text, density=1.24, diameter=1.75, from_first_layer=False):
     total = 0.0
     sx = sy = sz = 0.0
     started = not from_first_layer
+    arcs = 0
     for raw in text.splitlines():
         line = raw.split(';', 1)[0].strip()
         if raw.startswith(';LAYER_CHANGE'):
@@ -32,9 +34,34 @@ def mass_and_centre(text, density=1.24, diameter=1.75, from_first_layer=False):
         if cmd == 'M82':
             rel = False
             continue
-        if cmd in ('G2', 'G3'):
-            raise ValueError('arc moves (G2/G3) are not handled: slice with arc fitting off')
         w = dict((k, float(v)) for k, v in WORD.findall(line[len(cmd):]))
+        if cmd in ('G2', 'G3'):
+            if 'R' in w:
+                raise ValueError('arc moves in R form are not handled (PrusaSlicer writes I/J)')
+            nx, ny, nz = w.get('X', x), w.get('Y', y), w.get('Z', z)
+            de = 0.0
+            if 'E' in w:
+                de = w['E'] if rel else w['E'] - e
+                e = e + w['E'] if rel else w['E']
+            if de > 0 and started:
+                cx, cy = x + w.get('I', 0.0), y + w.get('J', 0.0)
+                r = math.hypot(x - cx, y - cy)
+                a0, a1 = math.atan2(y - cy, x - cx), math.atan2(ny - cy, nx - cx)
+                sweep = a1 - a0
+                if cmd == 'G2' and sweep >= 0:
+                    sweep -= 2 * math.pi
+                if cmd == 'G3' and sweep <= 0:
+                    sweep += 2 * math.pi
+                h = abs(sweep) / 2
+                dist = r * math.sin(h) / h if h > 1e-12 else r
+                mid = a0 + sweep / 2
+                total += de
+                sx += de * (cx + dist * math.cos(mid))
+                sy += de * (cy + dist * math.sin(mid))
+                sz += de * nz
+                arcs += 1
+            x, y, z = nx, ny, nz
+            continue
         if cmd == 'G92':
             if 'E' in w:
                 e = w['E']
@@ -54,9 +81,9 @@ def mass_and_centre(text, density=1.24, diameter=1.75, from_first_layer=False):
             sz += de * nz
         x, y, z = nx, ny, nz
     if total == 0:
-        return {'filament_mm': 0.0, 'mass_g': 0.0, 'centre': None}
+        return {'filament_mm': 0.0, 'mass_g': 0.0, 'centre': None, 'arcs': arcs}
     return {'filament_mm': total, 'mass_g': total * area * density / 1000.0,
-            'centre': [sx / total, sy / total, sz / total]}
+            'centre': [sx / total, sy / total, sz / total], 'arcs': arcs}
 
 
 if __name__ == '__main__':

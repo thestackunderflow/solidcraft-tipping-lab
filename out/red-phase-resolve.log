@@ -1,0 +1,15 @@
+
+==================================== ERRORS ====================================
+________________ ERROR collecting tests/test_resolve_preset.py _________________
+ImportError while importing test module '/work/tests/test_resolve_preset.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_resolve_preset.py:7: in <module>
+    import resolve_preset as R  # noqa: E402
+E   ModuleNotFoundError: No module named 'resolve_preset'
+=========================== short test summary info ============================
+ERROR tests/test_resolve_preset.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.04s

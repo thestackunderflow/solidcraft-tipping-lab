@@ -64,6 +64,32 @@ G1 X10 Y0 E1.0
     assert part['centre'][1] == pytest.approx(0.0)
 
 
-def test_g2_arcs_are_refused_not_guessed():
-    with pytest.raises(ValueError):
-        G.mass_and_centre("M83\nG1 Z0.2\nG2 X1 Y1 I1 J0 E0.5\n", density=1.0, diameter=1.75)
+def test_an_arc_bead_sits_at_the_arc_centroid():
+    # a counter-clockwise quarter circle (G3) of radius 10 about (0, 0), from (10, 0) to (0, 10): the centroid of the
+    # curve is r sin(h)/h from the centre along the bisector, h = half the sweep
+    g = """M83
+G1 Z0.2
+G1 X10 Y0
+G3 X0 Y10 I-10 J0 E2.0
+"""
+    r = G.mass_and_centre(g, density=1.0, diameter=1.75)
+    d = 10 * math.sin(math.pi / 4) / (math.pi / 4)
+    assert r['filament_mm'] == pytest.approx(2.0)
+    assert r['centre'][0] == pytest.approx(d * math.cos(math.pi / 4))
+    assert r['centre'][1] == pytest.approx(d * math.sin(math.pi / 4))
+    assert r['arcs'] == 1
+
+
+def test_a_clockwise_arc_goes_the_other_way_round():
+    # G2 from (10, 0) to (0, 10) about (0, 0) is the long way: three quarters, clockwise, through (0, -10) and (-10, 0)
+    g = """M83
+G1 Z0.2
+G1 X10 Y0
+G2 X0 Y10 I-10 J0 E2.0
+"""
+    r = G.mass_and_centre(g, density=1.0, diameter=1.75)
+    h = 3 * math.pi / 4
+    d = 10 * math.sin(h) / h
+    # bisector of the clockwise sweep from 0 deg to -270 deg is -135 deg
+    assert r['centre'][0] == pytest.approx(d * math.cos(-3 * math.pi / 4))
+    assert r['centre'][1] == pytest.approx(d * math.sin(-3 * math.pi / 4))
