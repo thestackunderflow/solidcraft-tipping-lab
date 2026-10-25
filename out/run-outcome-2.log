@@ -1,0 +1,4 @@
+spent $0.5458 of $20.00; this run may cost up to $1.50: GO
+total now $0.6497
+{"arm": "outcome", "run": "2", "model": "claude-sonnet-5-5", "budget_usd": 1.50, "exit": 0, "hang_killed": 0, "wall_s": 37, "claude_version": "2.1.310 (Claude Code)", "solidcraft": "0.22.0"}
+cost 0.1038637

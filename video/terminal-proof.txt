@@ -1,0 +1,5 @@
+the stand, three ways (balance y):
+  SolidCraft, solid:  155.8 g  31.94
+  our STL maths:      155.8 g  31.94
+  slicer, 100%:       156.0 g  31.93
+  slicer, 15%:         42.7 g  30.04

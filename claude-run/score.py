@@ -136,7 +136,10 @@ def table():
                                            round(g['band']['by_stand']['sliced']['max_mm'], 2)],
                         'phone_own_point_over_footprint': bool(own_over),
                         'stands_as_sliced': bool(g['central']['sliced']['margin_mm'] > 0),
-                        'overlaps': g['interference_count']})
+                        'overlaps': g['interference_count'],
+                        # the phone block at the settled pose must not cut into the stand: else the phone doesn't fit
+                        'phone_fits': g['interference_count'] == 0,
+                        'passes': bool(g['interference_count'] == 0 and g['central']['sliced']['margin_mm'] > 0)})
         else:
             row.update({'scored': 'by hand', 'why': (g or {}).get('error', 'no scored design')})
         rows.append(row)

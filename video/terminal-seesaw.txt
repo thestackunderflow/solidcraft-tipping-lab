@@ -1,0 +1,5 @@
+the seesaw sum, sliced, 210 g (y, mm):
+  stand  42.7 g at  30.0
+  phone 210.0 g at  -8.5
+  (42.7 x 30.0 + 210 x -8.5) / 252.7
+  = -2.0: 5.0 mm past the edge at 3.0

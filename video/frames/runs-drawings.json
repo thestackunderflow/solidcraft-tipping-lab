@@ -1,0 +1,25 @@
+[
+ {
+  "name": "run-outcome1-roof",
+  "opening_mm": 4.36,
+  "overlap_px": 322
+ },
+ {
+  "name": "run-outcome3-fits",
+  "opening_mm": 10.0,
+  "overlap_px": 0
+ },
+ {
+  "name": "run-outcome1-mouth",
+  "opening_mm": 4.36,
+  "overlap_px": 5841
+ },
+ {
+  "name": "run-outcome3-mouth",
+  "opening_mm": 10.0,
+  "overlap_px": 0
+ },
+ {
+  "part1_opening_mm": 10.0
+ }
+]

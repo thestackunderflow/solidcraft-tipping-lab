@@ -1,0 +1,43 @@
+{
+ "commands": [
+  {
+   "command": "doc.open",
+   "params": {
+    "path": "/work/out/probe/0.22.0/lip15-p210/design.solidcraft"
+   }
+  },
+  {
+   "command": "appearance.assign",
+   "params": {
+    "bodies": [
+     "PhoneStand"
+    ],
+    "color": "#cbd5e1"
+   }
+  },
+  {
+   "command": "appearance.assign",
+   "params": {
+    "bodies": [
+     "Phone"
+    ],
+    "color": "#475569"
+   }
+  },
+  {
+   "command": "view.apply",
+   "params": {
+    "camera": {
+     "target": [
+      100,
+      25,
+      45
+     ],
+     "yaw": 2.5,
+     "pitch": 0.32,
+     "distance": 340
+    }
+   }
+  }
+ ]
+}

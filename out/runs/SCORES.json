@@ -1,0 +1,158 @@
+{
+ "runs": [
+  {
+   "run": "outcome-1",
+   "cost_usd": 0.1129913,
+   "changed": {
+    "back_angle": "110 deg"
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 1,
+   "stand_g_solid": 152.8,
+   "stand_g_sliced": 43.096,
+   "margin_solid_mm": 16.44,
+   "margin_sliced_mm": 12.47,
+   "band_sliced_mm": [
+    10.9,
+    15.45
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 1,
+   "phone_fits": false,
+   "passes": false
+  },
+  {
+   "run": "outcome-2",
+   "cost_usd": 0.1038637,
+   "changed": {
+    "back_angle": "110 deg"
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 1,
+   "stand_g_solid": 152.8,
+   "stand_g_sliced": 43.096,
+   "margin_solid_mm": 16.44,
+   "margin_sliced_mm": 12.47,
+   "band_sliced_mm": [
+    10.9,
+    15.45
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 1,
+   "phone_fits": false,
+   "passes": false
+  },
+  {
+   "run": "outcome-3",
+   "cost_usd": 0.1402553,
+   "changed": {
+    "back_angle": "110 deg",
+    "slot_floor": 12
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 1,
+   "stand_g_solid": 156.45,
+   "stand_g_sliced": 42.609,
+   "margin_solid_mm": 16.29,
+   "margin_sliced_mm": 12.02,
+   "band_sliced_mm": [
+    10.43,
+    15.46
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 0,
+   "phone_fits": true,
+   "passes": true
+  },
+  {
+   "run": "viewer-1",
+   "cost_usd": 0.1480813,
+   "changed": {
+    "stand_depth": "90",
+    "back_angle": "110 deg",
+    "front_lip": "14.65",
+    "slot_floor": "10"
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 0,
+   "stand_g_solid": 243.47,
+   "stand_g_sliced": 61.811,
+   "margin_solid_mm": 39.79,
+   "margin_sliced_mm": 40.16,
+   "band_sliced_mm": [
+    38.69,
+    43.12
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 0,
+   "phone_fits": true,
+   "passes": true
+  },
+  {
+   "run": "viewer-2",
+   "cost_usd": 0.1648533,
+   "changed": {
+    "back_angle": "110 deg",
+    "front_lip": "10 mm",
+    "slot_floor": "10 mm",
+    "stand_depth": "2 * (front_lip + (phone_thickness + slot_clearance) / 2 * cos(back_angle - 90 deg) + 75 mm * cos(180 deg - back_angle))"
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 1,
+   "stand_g_solid": 215.84,
+   "stand_g_sliced": 55.683,
+   "margin_solid_mm": 35.0,
+   "margin_sliced_mm": 35.46,
+   "band_sliced_mm": [
+    33.96,
+    38.49
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 0,
+   "phone_fits": true,
+   "passes": true
+  },
+  {
+   "run": "viewer-3",
+   "cost_usd": 0.11977349999999999,
+   "changed": {
+    "back_angle": "110 deg",
+    "stand_depth": 80,
+    "front_lip": 9.65,
+    "slot_floor": 10
+   },
+   "weighed_with_materials": false,
+   "used_uniform_com": false,
+   "added_phone_body": false,
+   "failed_calls": 0,
+   "stand_g_solid": 213.76,
+   "stand_g_sliced": 54.921,
+   "margin_solid_mm": 34.64,
+   "margin_sliced_mm": 35.1,
+   "band_sliced_mm": [
+    33.6,
+    38.14
+   ],
+   "phone_own_point_over_footprint": true,
+   "stands_as_sliced": true,
+   "overlaps": 0,
+   "phone_fits": true,
+   "passes": true
+  }
+ ]
+}

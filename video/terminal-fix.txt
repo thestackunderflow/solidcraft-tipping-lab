@@ -1,0 +1,5 @@
+front lip, sliced, worst case:
+  35 mm: 0.9 mm to spare: not enough
+  40 mm: 5.1 mm to spare: passes
+210 g phone at 40 mm: 15.8 mm
+same 42.6 g of plastic

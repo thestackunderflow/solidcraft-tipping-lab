@@ -1,0 +1,4 @@
+SolidCraft, two balance points (y):
+  center_of_mass (same weight): 14.3
+  properties (real weights):     8.7
+  5.6 mm apart: ask the right one

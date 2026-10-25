@@ -1,0 +1,38 @@
+{
+ "speed": {
+  "grams": 42.659,
+  "time": "1h 0m 23s",
+  "com_y": 30.04,
+  "margin_210g_mm": -5.03
+ },
+ "3walls": {
+  "grams": 47.004,
+  "time": "1h 5m 5s",
+  "com_y": 29.65,
+  "margin_210g_mm": -4.56
+ },
+ "20pct": {
+  "grams": 48.942,
+  "time": "1h 7m 30s",
+  "com_y": 30.42,
+  "margin_210g_mm": -4.18
+ },
+ "gyroid": {
+  "grams": 42.412,
+  "time": "1h 40m 12s",
+  "com_y": 29.95,
+  "margin_210g_mm": -5.08
+ },
+ "3w20g": {
+  "grams": 52.278,
+  "time": "2h 11m 56s",
+  "com_y": 29.93,
+  "margin_210g_mm": -3.88
+ },
+ "100pct": {
+  "grams": 155.98,
+  "time": "3h 14m 33s",
+  "com_y": 31.93,
+  "margin_210g_mm": 5.7
+ }
+}

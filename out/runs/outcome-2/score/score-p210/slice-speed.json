@@ -1,0 +1,26 @@
+{
+ "stl": "out/runs/outcome-2/score/score-p210/stand.stl",
+ "settings": {
+  "print_settings_id": "0.20mm SPEED @MK4S 0.4",
+  "layer_height": "0.2",
+  "perimeters": "2",
+  "fill_density": "15%",
+  "fill_pattern": "grid",
+  "top_solid_layers": "5",
+  "bottom_solid_layers": "3",
+  "filament_density": "1.24",
+  "filament_diameter": "1.75",
+  "arc_fitting": "emit_center",
+  "skirts": "0",
+  "brim_width": "0"
+ },
+ "slicer_total_g": 43.15,
+ "time": "1h 2m 18s",
+ "part_g_from_gcode": 43.096,
+ "part_centre_from_gcode": [
+  124.988,
+  104.899,
+  15.441
+ ],
+ "note": "part_* counts beads from the first ;LAYER_CHANGE on (the purge line before it is left out); the G-code is centred at 125,105"
+}
