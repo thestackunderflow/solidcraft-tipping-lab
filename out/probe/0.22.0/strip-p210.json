@@ -29,6 +29,18 @@
   "com_y": 29.93,
   "margin_210g_mm": -3.88
  },
+ "50pct": {
+  "grams": 88.667,
+  "time": "1h 54m 23s",
+  "com_y": 31.44,
+  "margin_210g_mm": 0.32
+ },
+ "60pct": {
+  "grams": 102.284,
+  "time": "2h 11m 6s",
+  "com_y": 31.61,
+  "margin_210g_mm": 1.6
+ },
  "100pct": {
   "grams": 155.98,
   "time": "3h 14m 33s",

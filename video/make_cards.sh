@@ -81,3 +81,12 @@ drawtext=fontfile=$R:text='The slot mouth, zoomed in, side view · red = where t
 drawtext=fontfile=$R:text='Two designs Claude made, back angle 110 · our drawing from the saved designs':fontcolor=$GREY:fontsize=26:x=(w-text_w)/2:y=970" \
   -frames:v 1 $F/mouth-card.png
 echo "mouth card written"
+ffmpeg -v error -y -i $F/side-p210-sliced.png -i $F/run-outcome3-fits.png -filter_complex "\
+[0:v]scale=-2:860[a];[1:v]scale=-2:860[b];color=c=$BG:s=1920x1080[bg];[bg][a]overlay=170:170[t];[t][b]overlay=1050:170,\
+drawtext=fontfile=$B:text='PART 1':fontcolor=$INK:fontsize=48:x=120:y=40,\
+drawtext=fontfile=$R:text='leans over the short end':fontcolor=$INK:fontsize=34:x=120:y=104,\
+drawtext=fontfile=$B:text='CLAUDE\: FLIPPED':fontcolor=$BLUE:fontsize=48:x=1000:y=40,\
+drawtext=fontfile=$R:text='leans over the long end':fontcolor=$BLUE:fontsize=34:x=1000:y=104,\
+drawtext=fontfile=$R:text='Side view · back angle 70 (left) and 110 (right) · our drawing from the saved designs':fontcolor=$INK:fontsize=28:x=(w-text_w)/2:y=1045" \
+  -frames:v 1 $F/flip-card.png
+echo "flip card written"

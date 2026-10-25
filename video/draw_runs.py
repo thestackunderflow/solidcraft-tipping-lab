@@ -3,9 +3,12 @@ top is partly roofed, the phone block cuts into it, red) and outcome-3 (slot_flo
 import json, os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import draw as D
+sys.path.insert(0, os.path.join(D.LAB, 'probe')); sys.path.insert(0, os.path.join(D.LAB, 'tests'))
+import analyse as AN
 R = os.path.join(D.LAB, 'out', 'runs')
 made = [D.side_run(os.path.join(R, 'outcome-1', 'score', 'score-p210', 'cell.json'), 'run-outcome1-roof', 110.0, 8.0),
-        D.side_run(os.path.join(R, 'outcome-3', 'score', 'score-p210', 'cell.json'), 'run-outcome3-fits', 110.0, 12.0),
+        D.side_run(os.path.join(R, 'outcome-3', 'score', 'score-p210', 'cell.json'), 'run-outcome3-fits', 110.0, 12.0,
+                   y0=-40.0, shared=AN.cell_numbers(os.path.join(R, 'outcome-3', 'score', 'score-p210'))['central']['sliced']['combined_com'][1:], shared_ok=True),
         D.side_run(os.path.join(R, 'outcome-1', 'score', 'score-p210', 'cell.json'), 'run-outcome1-mouth', 110.0, 8.0,
                    w=960, h=720, y0=12.0, z0=14.0, scale=32.0),
         D.side_run(os.path.join(R, 'outcome-3', 'score', 'score-p210', 'cell.json'), 'run-outcome3-mouth', 110.0, 12.0,

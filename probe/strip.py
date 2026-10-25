@@ -10,7 +10,7 @@ root = os.path.join(LAB, 'out', 'probe', '0.22.0')
 n = json.load(open(os.path.join(root, 'numbers.json'), encoding='utf-8'))['lip15-p210']
 st = read_stl(os.path.join(root, 'lip15-p190', 'stand.stl'))
 out = {}
-for k in ('speed', '3walls', '20pct', 'gyroid', '3w20g', '100pct'):
+for k in ('speed', '3walls', '20pct', 'gyroid', '3w20g', '50pct', '60pct', '100pct'):
     s = json.load(open(os.path.join(root, 'lip15-p190', f'slice-{k}.json'), encoding='utf-8'))
     com = AN.gcode_back_to_model(s['part_centre_from_gcode'], st)
     r = M.margin_row(s['part_g_from_gcode'], com, 210.0, n['phone_pose_settled'], n['footprint'], n['tipping_edge'])

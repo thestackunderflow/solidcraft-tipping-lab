@@ -116,8 +116,8 @@ def stand_profile(front_lip=15.0, angle=70.0, slot_w=10.0, floor=8.0, depth=60.0
     return F, C, [F, C, C + slot_len * ax, F + slot_len * ax]
 
 
-def stand_mask(cv, front_lip=15.0):
-    F, C, slot = stand_profile(front_lip)
+def stand_mask(cv, front_lip=15.0, angle=70.0, floor=8.0):
+    F, C, slot = stand_profile(front_lip, angle, 10.0, floor)
     Y, Z = cv.Y, cv.Z
     r = 3.0
     box = (Y >= 0) & (Y <= 60) & (Z >= 0) & (Z <= 30)
@@ -138,7 +138,7 @@ def phone_rect(cell):
     return [c - hl * d - ht * nf, c - hl * d + ht * nf, c + hl * d + ht * nf, c + hl * d - ht * nf]
 
 
-def side(cell, stand, name, front_lip=15.0, phone=True, dots=('stand', 'phone', 'shared'), w=900, h=1300):
+def side(cell, stand, name, front_lip=15.0, phone=True, dots=('stand', 'phone', 'shared'), w=900, h=1300, bracket=False):
     n = NUM[cell]
     cv = Canvas(w, h, -40.0, -8.0, 7.5)
     cv.fill_mask(cv.Z < 0, (226, 232, 240))
@@ -154,7 +154,13 @@ def side(cell, stand, name, front_lip=15.0, phone=True, dots=('stand', 'phone', 
     sc = s['com']
     pc = n['phone_pose_settled']
     g = n['central'][stand]['combined_com']
-    if 'stand' in dots:
+    if 'standline' in dots:
+        cv.dashed((sc[1], sc[2]), (sc[1], 0.0), GREEN, 0.7)
+    if bracket:
+        cv.line((edge_y, -5.0), (front_lip, -5.0), AMBER, 1.0)
+        cv.line((edge_y, -6.5), (edge_y, -3.5), AMBER, 0.8)
+        cv.line((front_lip, -6.5), (front_lip, -3.5), AMBER, 0.8)
+    if 'stand' in dots or 'standline' in dots:
         cv.dot((sc[1], sc[2]), 1.6, AMBER, ring=((255, 255, 255), 0.5))
     if 'phone' in dots:
         cv.dot((pc[1], pc[2]), 1.6, (255, 255, 255), ring=(INK, 0.5))
@@ -234,6 +240,9 @@ if __name__ == '__main__':
         side('lip40-p250', 'sliced', 'side-fix-p250-sliced', front_lip=40.0),
         honeycomb(os.path.join(LAB, 'out', 'probe', '0.22.0', 'lip15-p210', 'slice-speed.gcode')),
         ruler('ruler-plain'), ruler('ruler-coin', coin=120.0),
+        side('lip15-p210', 'solid', 'stand-only', phone=False, dots=('standline',)),
+        side('lip15-p210', 'sliced', 'fix-before', dots=('phone', 'shared'), bracket=True),
+        side('lip40-p210', 'sliced', 'fix-after', front_lip=40.0, dots=('phone', 'shared'), bracket=True),
     ]
     json.dump(made, open(os.path.join(OUT, 'drawings.json'), 'w', encoding='utf-8'), indent=1)
     for m in made:
@@ -257,7 +266,7 @@ def opening_at_top(angle, floor, front_lip=15.0, slot_w=10.0, slot_len=25.0, top
     return (ys[-1] - ys[0]) * math.sin(math.radians(angle))
 
 
-def side_run(cell_json, name, angle, floor, w=900, h=1300, y0=-10.0, z0=-8.0, scale=7.5):
+def side_run(cell_json, name, angle, floor, w=900, h=1300, y0=-10.0, z0=-8.0, scale=7.5, shared=None, shared_ok=True):
     """A run's design (part 1 slot with the run's back_angle / slot_floor), the 210 g block at our settled pose, and
     where the block would cut into the stand in red: the phone doesn't fit."""
     c = json.load(open(cell_json, encoding='utf-8'))
@@ -274,10 +283,16 @@ def side_run(cell_json, name, angle, floor, w=900, h=1300, y0=-10.0, z0=-8.0, sc
     F, C, slot = stand_profile(15.0, angle, 10.0, floor)
     Y, Z = cv.Y, cv.Z
     box = (Y >= 0) & (Y <= 60) & (Z >= 0) & (Z <= 30)
-    st = box & ~cv.poly_mask(slot)
+    st = stand_mask(cv, 15.0, angle, floor)
     ph = cv.poly_mask(rect)
     cv.fill_mask(st, STAND)
     cv.fill_mask(ph & ~st, PHONE)
     cv.fill_mask(ph & st, RED)
+    if shared is not None:
+        col = GREEN if shared_ok else RED
+        cv.line((3.0, -1.6), (57.0, -1.6), BLUE, 1.6)
+        cv.dashed((shared[0], shared[1]), (shared[0], 0.0), col, 0.7)
+        cv.dot((shared[0], shared[1]), 2.4, col, ring=((255, 255, 255), 0.6))
+        cv.dot((cc[0], cc[1]), 1.6, (255, 255, 255), ring=(INK, 0.5))
     png(os.path.join(OUT, name + '.png'), cv.img)
     return {'name': name, 'opening_mm': round(opening_at_top(angle, floor), 2), 'overlap_px': int((ph & st).sum())}
