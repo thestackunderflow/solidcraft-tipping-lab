@@ -1,0 +1,25 @@
+
+==================================== ERRORS ====================================
+__________________ ERROR collecting tests/test_gcode_mass.py ___________________
+ImportError while importing test module '/work/tests/test_gcode_mass.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_gcode_mass.py:11: in <module>
+    from tip import gcode_mass as G  # noqa: E402
+E   ImportError: cannot import name 'gcode_mass' from 'tip' (/work/tests/../tip/__init__.py)
+____________________ ERROR collecting tests/test_physics.py ____________________
+ImportError while importing test module '/work/tests/test_physics.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests/test_physics.py:15: in <module>
+    from tip import physics as P  # noqa: E402
+E   ImportError: cannot import name 'physics' from 'tip' (/work/tests/../tip/__init__.py)
+=========================== short test summary info ============================
+ERROR tests/test_gcode_mass.py
+ERROR tests/test_physics.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.28s
