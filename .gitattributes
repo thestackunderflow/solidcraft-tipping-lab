@@ -3,3 +3,4 @@
 *.stl binary
 *.jpg binary
 *.gcode -diff
+*.solidcraft binary
