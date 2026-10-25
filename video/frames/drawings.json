@@ -1,0 +1,135 @@
+[
+ {
+  "name": "side-p210-solid",
+  "cell": "lip15-p210",
+  "stand": "solid",
+  "margin_mm": 5.699243447636409,
+  "edge_y": 3.0,
+  "shared_yz": [
+   8.699243447636409,
+   51.6807471073458
+  ],
+  "phone_yz": [
+   -8.549064064494484,
+   79.37416545314667
+  ],
+  "scale_px_per_mm": 7.5,
+  "origin_mm": [
+   -40.0,
+   -8.0
+  ],
+  "size_px": [
+   900,
+   1300
+  ]
+ },
+ {
+  "name": "side-p210-sliced",
+  "cell": "lip15-p210",
+  "stand": "sliced",
+  "margin_mm": -5.034015853556936,
+  "edge_y": 3.0,
+  "shared_yz": [
+   -2.0340158535569364,
+   68.56988328997107
+  ],
+  "phone_yz": [
+   -8.549064064494484,
+   79.37416545314667
+  ],
+  "scale_px_per_mm": 7.5,
+  "origin_mm": [
+   -40.0,
+   -8.0
+  ],
+  "size_px": [
+   900,
+   1300
+  ]
+ },
+ {
+  "name": "phone-alone",
+  "cell": "lip15-p210",
+  "stand": "sliced",
+  "margin_mm": -5.034015853556936,
+  "edge_y": 3.0,
+  "shared_yz": [
+   -2.0340158535569364,
+   68.56988328997107
+  ],
+  "phone_yz": [
+   -8.549064064494484,
+   79.37416545314667
+  ],
+  "scale_px_per_mm": 7.5,
+  "origin_mm": [
+   -40.0,
+   -8.0
+  ],
+  "size_px": [
+   900,
+   1300
+  ]
+ },
+ {
+  "name": "stand-and-phone-dots",
+  "cell": "lip15-p210",
+  "stand": "solid",
+  "margin_mm": 5.699243447636409,
+  "edge_y": 3.0,
+  "shared_yz": [
+   8.699243447636409,
+   51.6807471073458
+  ],
+  "phone_yz": [
+   -8.549064064494484,
+   79.37416545314667
+  ],
+  "scale_px_per_mm": 7.5,
+  "origin_mm": [
+   -40.0,
+   -8.0
+  ],
+  "size_px": [
+   900,
+   1300
+  ]
+ },
+ {
+  "name": "side-fix-p250-sliced",
+  "cell": "lip40-p250",
+  "stand": "sliced",
+  "margin_mm": 13.31489419914811,
+  "edge_y": 3.0,
+  "shared_yz": [
+   16.31489419914811,
+   75.18764081059375
+  ],
+  "phone_yz": [
+   13.967686663297318,
+   85.38111751322486
+  ],
+  "scale_px_per_mm": 7.5,
+  "origin_mm": [
+   -40.0,
+   -8.0
+  ],
+  "size_px": [
+   900,
+   1300
+  ]
+ },
+ {
+  "name": "honeycomb",
+  "z": 15.0,
+  "segments": 185
+ },
+ {
+  "name": "ruler-plain",
+  "balance_mm": 0.0
+ },
+ {
+  "name": "ruler-coin",
+  "balance_mm": 30.0
+ }
+]
