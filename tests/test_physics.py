@@ -65,3 +65,48 @@ def test_phone_pose_in_the_slot_puts_its_middle_up_the_slot_axis():
     assert c[0] == 1.0
     assert c[1] == pytest.approx(10 - 75 * math.cos(math.radians(70)))
     assert c[2] == pytest.approx(5 + 75 * math.sin(math.radians(70)))
+
+
+def _vertical_slot():
+    # a vertical slot 10 mm wide: front wall y=0, back wall y=10, floor z=0, top z=30; a 9 mm phone
+    return dict(front_floor=(0.0, 0.0), back_floor=(10.0, 0.0), front_top=(0.0, 30.0), thickness=9.0)
+
+
+def test_flush_pose_stands_against_the_front_wall_along_the_slot_axis():
+    p = P.slot_pose(**_vertical_slot(), length=150.0, lean='flush')
+    assert p['axis_deg'] == pytest.approx(90.0)
+    # the phone's middle: 4.5 mm in from the front wall, 75 mm up
+    assert p['centre_yz'][0] == pytest.approx(4.5)
+    assert p['centre_yz'][1] == pytest.approx(75.0)
+
+
+def test_a_phone_does_not_tilt_into_the_play_when_that_lifts_its_middle():
+    # tilting a phone forward about its front-bottom corner first LIFTS its middle (it sits t/2 behind the front
+    # face): (L/2) cos(theta) + (t/2) sin(theta) rises until tan(theta) = t/L, 3.4 degrees here, more than the 1 mm
+    # of play allows. So the lowest pose, where gravity leaves it, is flat against the wall it leans on.
+    s = _vertical_slot()
+    flush = P.slot_pose(**s, length=150.0, lean='flush')
+    p = P.slot_pose(**s, length=150.0, lean='settled')
+    assert p['tilt_deg'] == pytest.approx(0.0)
+    assert np.allclose(p['centre_yz'], flush['centre_yz'])
+
+
+def test_settled_pose_never_goes_through_the_floor_or_walls():
+    s = _vertical_slot()
+    for tilt in (0.5, 1.0, 1.5):
+        p = P.slot_pose(**s, length=150.0, lean='settled', max_tilt_deg=tilt, force_tilt=True)
+        for (y, z) in p['bottom_corners_yz']:
+            assert z >= -1e-6 and -1e-6 <= y <= 10.0 + 1e-6
+
+
+def test_flush_pose_on_a_leaning_slot():
+    # the part 1 slot (sketch SlotProfile): floor (15, 8) -> (24.397, 11.420), front wall top edge where it meets z = 30
+    F, C = (15.0, 8.0), (24.396926, 11.420201)
+    E = (15.0 - 22.0 / math.tan(math.radians(70)), 30.0)
+    p = P.slot_pose(F, C, E, 9.0, 150.0, lean='flush')
+    assert p['axis_deg'] == pytest.approx(70.0, abs=1e-3)
+    # the middle: 4.5 mm in from the front wall along the floor, 75 mm up the axis
+    ux = np.array([math.cos(math.radians(20)), math.sin(math.radians(20))])
+    uy = np.array([-math.sin(math.radians(20)), math.cos(math.radians(20))])
+    expect = np.array(F) + 4.5 * ux + 75.0 * uy
+    assert np.allclose(p['centre_yz'], expect, atol=1e-6)

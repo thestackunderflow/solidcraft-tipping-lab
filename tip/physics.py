@@ -88,3 +88,82 @@ def phone_centre(floor_centre, axis_deg, length, x, toward=1):
     y0, z0 = floor_centre
     a = math.radians(axis_deg)
     return np.array([float(x), y0 + toward * (length / 2) * math.cos(a), z0 + (length / 2) * math.sin(a)])
+
+
+def _unit(v):
+    v = np.asarray(v, dtype=float)
+    return v / np.linalg.norm(v)
+
+
+def slot_pose(front_floor, back_floor, front_top, thickness, length, lean='settled', max_tilt_deg=15.0, step_deg=0.01,
+              force_tilt=False):
+    """The phone standing in a slot, in the slot's (y, z) section.
+
+    The slot: a floor from front_floor to back_floor, walls perpendicular to it, front_top = the front wall's top edge.
+    The phone (thickness x length) stands on the floor and leans on front_top with its front face. In the slot's own
+    frame (X across from the front wall to the back wall, Y up the slot axis) it may tilt forward by theta into the
+    slot's play. For each theta it sits as low as the floor and the walls allow (sliding down its contact).
+    lean='flush': theta = 0, flat against the front wall. lean='settled': the theta with the lowest middle, which is
+    where gravity takes a phone with no friction at its foot (static, no tap). Returns the axis angle from the table,
+    the tilt, the phone's middle and its bottom corners in world (y, z). force_tilt=True returns the pose at
+    max_tilt_deg (or the last one that fits): for tests and the worst-case band."""
+    F, C, E = (np.asarray(p, dtype=float) for p in (front_floor, back_floor, front_top))
+    ux = _unit(C - F)                       # across the slot, front -> back
+    uy = np.array([-ux[1], ux[0]])          # up the slot axis
+    if np.dot(uy, E - F) < 0:
+        uy = -uy
+    W = float(np.linalg.norm(C - F))
+    H = float(np.dot(E - F, uy))
+    t, L = float(thickness), float(length)
+
+    def local(theta):
+        st, ct = math.sin(theta), math.cos(theta)
+        d = np.array([-st, ct])             # up the phone (top toward the front wall)
+        nf = np.array([-ct, -st])           # out of its front face
+        kf = float(np.dot(nf, [0.0, H]))    # the front face passes the top edge
+        kb = kf - t
+        lo, hi = -math.inf, math.inf
+        for k in (kf, kb):
+            # corner = s d + k nf ; Y >= 0 (floor) ; 0 <= X <= W (walls)
+            cy, ky = d[1], k * nf[1]
+            lo = max(lo, -ky / cy)
+            cx, kx = d[0], k * nf[0]
+            if abs(cx) < 1e-15:
+                if not (-1e-9 <= kx <= W + 1e-9):
+                    return None
+            else:
+                a1, a2 = (0.0 - kx) / cx, (W - kx) / cx   # X >= 0 and X <= W
+                lo_x, hi_x = (a2, a1) if cx < 0 else (a1, a2)
+                lo, hi = max(lo, lo_x), min(hi, hi_x)
+        if lo > hi + 1e-9:
+            return None
+        s = lo
+        centre = (s + L / 2) * d + (kf - t / 2) * nf
+        corners = [s * d + kf * nf, s * d + kb * nf]
+        return theta, centre, corners
+
+    def world(res):
+        theta, c, corners = res
+        to_w = lambda q: F + q[0] * ux + q[1] * uy
+        axis = to_w(np.array([-math.sin(theta), math.cos(theta)])) - F
+        return {'tilt_deg': math.degrees(theta),
+                'axis_deg': math.degrees(math.atan2(axis[1], abs(axis[0]))) if abs(axis[0]) > 1e-12 else 90.0,
+                'centre_yz': [float(v) for v in to_w(c)],
+                'bottom_corners_yz': [[float(v) for v in to_w(q)] for q in corners]}
+
+    flush = local(0.0)
+    if lean == 'flush':
+        return world(flush)
+    best = flush
+    th = 0.0
+    while th < math.radians(max_tilt_deg):
+        th += math.radians(step_deg)
+        r = local(th)
+        if r is None:
+            break
+        if force_tilt:
+            best = r
+            continue
+        if (F + r[1][0] * ux + r[1][1] * uy)[1] < (F + best[1][0] * ux + best[1][1] * uy)[1]:
+            best = r
+    return world(best)
