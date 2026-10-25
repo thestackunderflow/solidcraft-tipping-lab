@@ -10,11 +10,15 @@ lip20-p250             stand 155.8 g solid / 42.6 g sliced | margin solid +5.29 
 lip25-p190             stand 155.8 g solid / 42.6 g sliced | margin solid +11.57 (+10.52..+13.79) sliced +3.69 (+2.13..+6.99) | overlaps 0
 lip25-p250             stand 155.8 g solid / 42.6 g sliced | margin solid +8.10 (+6.93..+10.75) sliced +0.49 (-1.14..+4.16) | overlaps 0
 lip30-p190             stand 155.8 g solid / 42.6 g sliced | margin solid +14.01 (+12.96..+16.23) sliced +7.78 (+6.22..+11.08) | overlaps 0
+lip30-p190-caseoff     stand 150.1 g solid / 41.5 g sliced | margin solid +10.21 (+8.81..+16.25) sliced +2.60 (+0.55..+11.48) | overlaps 0
 lip30-p250             stand 155.8 g solid / 42.6 g sliced | margin solid +10.92 (+9.74..+13.56) sliced +4.77 (+3.14..+8.44) | overlaps 0
 lip30-p250-case        stand 150.1 g solid / 41.5 g sliced | margin solid +11.44 (+10.25..+14.15) sliced +5.86 (+4.22..+9.57) | overlaps 0
+lip30-p250-caseoff     stand 150.1 g solid / 41.5 g sliced | margin solid +6.23 (+4.67..+13.63) sliced -1.29 (-3.43..+8.87) | overlaps 0
 lip35-p190             stand 155.8 g solid / 42.6 g sliced | margin solid +16.45 (+15.40..+18.66) sliced +11.87 (+10.31..+15.16) | overlaps 0
+lip35-p190-caseoff     stand 150.1 g solid / 41.6 g sliced | margin solid +12.60 (+11.20..+18.64) sliced +6.69 (+4.64..+15.57) | overlaps 0
 lip35-p250             stand 155.8 g solid / 42.6 g sliced | margin solid +13.73 (+12.56..+16.38) sliced +9.05 (+7.41..+12.72) | overlaps 0
 lip35-p250-case        stand 150.1 g solid / 41.6 g sliced | margin solid +14.23 (+13.03..+16.93) sliced +10.14 (+8.50..+13.85) | overlaps 0
+lip35-p250-caseoff     stand 150.1 g solid / 41.6 g sliced | margin solid +9.02 (+7.45..+16.42) sliced +2.99 (+0.85..+13.15) | overlaps 0
 lip40-p190             stand 155.8 g solid / 42.6 g sliced | margin solid +18.88 (+17.83..+21.10) sliced +15.95 (+14.39..+19.25) | overlaps 0
 lip40-p190-caseoff     stand 150.1 g solid / 41.6 g sliced | margin solid +14.99 (+13.60..+21.04) sliced +10.77 (+8.71..+19.64) | overlaps 0
 lip40-p250             stand 155.8 g solid / 42.6 g sliced | margin solid +16.55 (+15.37..+19.20) sliced +13.31 (+11.68..+16.99) | overlaps 0

@@ -42,7 +42,7 @@ def cells():
         c[f'lip{lip}-p190'] = dict(front_lip=float(lip), phone_thickness=9.0, phone='p190')
     for lip in (15, 30, 35, 40, 45):
         c[f'lip{lip}-p250-case'] = dict(front_lip=float(lip), phone_thickness=12.0, phone='p250')
-    for lip in (15, 40):   # a slot sized for a phone in a case (12 mm), with the bare phone in it: the most lean
+    for lip in (15, 30, 35, 40):   # a slot sized for a phone in a case (12 mm), with the bare phone in it: the most lean
         c[f'lip{lip}-p190-caseoff'] = dict(front_lip=float(lip), phone_thickness=12.0, block_thickness=9.0, phone='p190')
         c[f'lip{lip}-p250-caseoff'] = dict(front_lip=float(lip), phone_thickness=12.0, block_thickness=9.0, phone='p250')
     return c

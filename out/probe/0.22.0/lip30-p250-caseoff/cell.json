@@ -1,0 +1,297 @@
+{
+ "cell": "lip30-p250-caseoff",
+ "spec": {
+  "front_lip": 30.0,
+  "phone_thickness": 12.0,
+  "block_thickness": 9.0,
+  "phone": "p250"
+ },
+ "design_in": "part1-stand.solidcraft",
+ "phone_g": 250.0,
+ "utc": "2026-10-25T13:54:14+00:00",
+ "open": {
+  "errors": 0,
+  "features": 4,
+  "name": "stand",
+  "path": "/lab/out/lip30-p250-caseoff/design.solidcraft"
+ },
+ "set_front_lip": {
+  "display_value": 30.0,
+  "errors": [],
+  "expression": "30",
+  "name": "front_lip",
+  "recomputed": 3,
+  "restored": 0,
+  "value": 30.0
+ },
+ "set_phone_thickness": {
+  "display_value": 12.0,
+  "errors": [],
+  "expression": "12",
+  "name": "phone_thickness",
+  "recomputed": 3,
+  "restored": 0,
+  "value": 12.0
+ },
+ "parameters": {
+  "stand_width": 80.0,
+  "phone_thickness": 12.0,
+  "slot_clearance": 1.0,
+  "back_angle": 70.0,
+  "stand_depth": 60.0,
+  "stand_height": 30.0,
+  "slot_floor": 8.0,
+  "front_lip": 30.0,
+  "edge_radius": 3.0,
+  "d5": 13.0,
+  "d6": 25.0,
+  "d7": 70.0,
+  "d9": 30.0,
+  "d10": 10.0,
+  "d8": 8.0,
+  "d1": 80.0,
+  "d2": 60.0,
+  "d3": 30.0,
+  "d4": 60.0,
+  "d11": 80.0,
+  "d12": 3.0
+ },
+ "phone_block_mm": [
+  163.0,
+  78.0,
+  9.0
+ ],
+ "bodies_all": [
+  "PhoneStand"
+ ],
+ "stand_bodies": [
+  "PhoneStand"
+ ],
+ "assign_pla": {
+  "bodies": [
+   "PhoneStand"
+  ],
+  "material": "PLA"
+ },
+ "stand_solid": {
+  "mass_g": 150.11254399289368,
+  "com": [
+   100.00000000000001,
+   29.5904992904577,
+   14.109830300024548
+  ],
+  "volume_mm3": 121058.50322007555,
+  "bbox": {
+   "min": [
+    59.999999999999986,
+    -5.684341886080802e-14,
+    -1.4210854715202004e-14
+   ],
+   "max": [
+    140.00000000000003,
+    60.000000000000036,
+    30.000000000000007
+   ]
+  },
+  "material": "PLA",
+  "density": 1.24
+ },
+ "slot": {
+  "front_floor": [
+   30.0,
+   8.0
+  ],
+  "back_floor": [
+   42.21600407021681,
+   12.446261863233689
+  ],
+  "front_top_edge": [
+   21.99265484614356,
+   30.000000000000007
+  ]
+ },
+ "poses": {
+  "flush": {
+   "tilt_deg": 0.0,
+   "axis_deg": 69.99999999999999,
+   "centre_yz": [
+    6.35397511249462,
+    86.12403923901705
+   ],
+   "bottom_corners_yz": [
+    [
+     30.0,
+     8.0
+    ],
+    [
+     38.457233587073176,
+     11.078181289931015
+    ]
+   ]
+  },
+  "settled": {
+   "tilt_deg": 10.019999999999913,
+   "axis_deg": 59.980000000000096,
+   "centre_yz": [
+    -2.991194001457231,
+    82.23299505315642
+   ],
+   "bottom_corners_yz": [
+    [
+     33.88711227531778,
+     9.414793165466442
+    ],
+    [
+     41.679769638231285,
+     13.917513590301853
+    ]
+   ]
+  }
+ },
+ "phone_box": {
+  "completed": 3,
+  "ok": true,
+  "results": [
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [],
+    "created_bodies": [
+     "LabPhone"
+    ],
+    "feature": 5,
+    "ms": 3.514224,
+    "name": "Box1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [
+     "LabPhone"
+    ],
+    "created_bodies": [],
+    "feature": 6,
+    "ms": 0.049377,
+    "name": "Move1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [
+     "LabPhone"
+    ],
+    "created_bodies": [],
+    "feature": 7,
+    "ms": 0.033022,
+    "name": "Move2",
+    "removed_bodies": [],
+    "warning": null
+   }
+  ]
+ },
+ "phone_material": {
+  "appearance": null,
+  "density_g_cm3": 2.184818135738381,
+  "name": "Lab phone block 250 g",
+  "user": true
+ },
+ "interference": {
+  "boolean_ms": 17.551,
+  "budget_exceeded": false,
+  "budget_s": 240.0,
+  "checked": 2,
+  "count": 0,
+  "interferences": [],
+  "ms": 44.071,
+  "pairs_candidate": 1,
+  "pairs_cleared": 0,
+  "pairs_intersected": 1,
+  "pairs_not_checked": 0,
+  "skipped_pairs": 0,
+  "slowest": [
+   {
+    "a": "PhoneStand",
+    "b": "LabPhone",
+    "boolean_ms": 17.551,
+    "ms": 30.102,
+    "tessellate_ms": 0.0
+   }
+  ],
+  "tessellate_ms": 0.0,
+  "threads": 1,
+  "truncated": false,
+  "unchecked": []
+ },
+ "phone_solidcraft": {
+  "mass_g": 250.0,
+  "com": [
+   100.0,
+   -2.9911940014572607,
+   82.23299505315643
+  ],
+  "bbox": {
+   "max": [
+    139.0,
+    41.679769638231285,
+    155.0511969408464
+   ],
+   "min": [
+    61.0,
+    -47.6621576411458,
+    9.414793165466442
+   ]
+  }
+ },
+ "combined_solidcraft": {
+  "mass_g": 400.1125439928937,
+  "com": [
+   100.0,
+   9.232668861818578,
+   56.674832182558504
+  ]
+ },
+ "uniform_com": {
+  "bodies": [
+   {
+    "body": "PhoneStand",
+    "center": [
+     100.00000000009365,
+     29.590417346670755,
+     14.110228696471847
+    ],
+    "volume": 121034.28361935152
+   },
+   {
+    "body": "LabPhone",
+    "center": [
+     99.99999999999999,
+     -2.991194001457253,
+     82.23299505315643
+    ],
+    "volume": 114425.99999999987
+   }
+  ],
+  "center": [
+   100.00000000004813,
+   13.756819413237837,
+   47.21566602675011
+  ],
+  "volume": 235460.2836193514
+ },
+ "save": {
+  "bytes": 29513,
+  "name": "stand",
+  "path": "/lab/out/lip30-p250-caseoff/design.solidcraft"
+ },
+ "ok": true
+}

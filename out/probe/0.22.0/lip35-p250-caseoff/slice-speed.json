@@ -1,0 +1,26 @@
+{
+ "stl": "out/probe/0.22.0/lip35-p250-caseoff/stand.stl",
+ "settings": {
+  "print_settings_id": "0.20mm SPEED @MK4S 0.4",
+  "layer_height": "0.2",
+  "perimeters": "2",
+  "fill_density": "15%",
+  "fill_pattern": "grid",
+  "top_solid_layers": "5",
+  "bottom_solid_layers": "3",
+  "filament_density": "1.24",
+  "filament_diameter": "1.75",
+  "arc_fitting": "emit_center",
+  "skirts": "0",
+  "brim_width": "0"
+ },
+ "slicer_total_g": 41.65,
+ "time": "59m 11s",
+ "part_g_from_gcode": 41.595,
+ "part_centre_from_gcode": [
+  124.991,
+  104.927,
+  15.13
+ ],
+ "note": "part_* counts beads from the first ;LAYER_CHANGE on (the purge line before it is left out); the G-code is centred at 125,105"
+}
