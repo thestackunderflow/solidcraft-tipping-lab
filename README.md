@@ -39,7 +39,7 @@ The phone is a 150 x 72 x 9 mm block of 210 g unless a row says otherwise.
 Where each number lives: `out/probe/0.22.0/numbers.json` (every cell: weights, balance points, margins),
 `out/probe/analyse-0.22.0.txt` (the margin table), `out/probe/0.22.0/strip-p210.json` (the infill rows),
 `out/runs/SCORES.json` and `out/runs/BEHAVIOUR.json` (Claude's 6 runs, re-scored), `video/frames/runs-drawings.json`
-(the 4.36 mm slot opening).
+(the 4.36 mm slot opening; with `slot_floor` 8 the flipped slot's back top corner sits at z 28.07, 1.93 mm under the 30 mm top face, so a ~2 mm ledge of plastic covers part of the mouth: `D.stand_profile` and `D.opening_at_top` in `video/draw.py`).
 
 ## Run the lab
 You need Docker. Nothing is installed on your computer.
