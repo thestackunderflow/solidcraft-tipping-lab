@@ -16,4 +16,6 @@ S="$ROOT/lip15-p190"
 [ -f "$S/slice-gyroid.json" ] || bash slicer/slice.sh "$S/stand.stl" "$S" slice-gyroid --fill-pattern gyroid > /dev/null
 [ -f "$S/slice-3w20g.json" ] || bash slicer/slice.sh "$S/stand.stl" "$S" slice-3w20g --perimeters 3 --fill-density 20% --fill-pattern gyroid > /dev/null
 [ -f "$S/slice-100pct.json" ] || bash slicer/slice.sh "$S/stand.stl" "$S" slice-100pct --fill-density 100% --fill-pattern rectilinear > /dev/null
+[ -f "$S/slice-50pct.json" ] || bash slicer/slice.sh "$S/stand.stl" "$S" slice-50pct --fill-density 50% > /dev/null
+[ -f "$S/slice-60pct.json" ] || bash slicer/slice.sh "$S/stand.stl" "$S" slice-60pct --fill-density 60% > /dev/null
 echo "sliced: $(ls "$ROOT"/*/slice-speed.json | wc -l) cells"

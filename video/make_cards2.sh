@@ -51,6 +51,6 @@ ffmpeg -v error -y -i $F/fix-before.png -i $F/fix-after.png -filter_complex "\
 [0:v]scale=-2:960[a];[1:v]scale=-2:960[b];color=c=$BG:s=$S[bg];[bg][a]overlay=70:200[t];[t][b]overlay=880:200,\
 drawtext=fontfile=$B:text='✗ front lip 15':fontcolor=$RED:fontsize=80:x=80:y=40,\
 drawtext=fontfile=$B:text='✓ front lip 40':fontcolor=$GREEN:fontsize=80:x=880:y=40,\
-drawtext=fontfile=$B:text='same 43 g':fontcolor=$INK:fontsize=72:x=560:y=1090,\
-drawtext=fontfile=$B:text='you →':fontcolor=$BLUE:fontsize=72:x=1400:y=1080" -frames:v 1 $F/card-fix.png
+drawtext=fontfile=$B:text='same 43 g':fontcolor=$INK:fontsize=72:x=700:y=160,\
+drawtext=fontfile=$B:text='you →':fontcolor=$BLUE:fontsize=72:x=1380:y=560" -frames:v 1 $F/card-fix.png
 echo "cards2 written"
