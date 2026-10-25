@@ -1,0 +1,276 @@
+{
+ "cell": "score-p210",
+ "spec": {
+  "phone": "p210"
+ },
+ "design_in": "stand.solidcraft",
+ "phone_g": 210.0,
+ "utc": "2026-10-25T14:06:52+00:00",
+ "open": {
+  "errors": 0,
+  "features": 4,
+  "name": "stand",
+  "path": "/lab/out/score/score-p210/design.solidcraft"
+ },
+ "parameters": {
+  "stand_width": 80.0,
+  "phone_thickness": 9.0,
+  "slot_clearance": 1.0,
+  "back_angle": 110.0,
+  "stand_depth": 90.0,
+  "stand_height": 30.0,
+  "slot_floor": 10.0,
+  "front_lip": 14.65,
+  "edge_radius": 3.0,
+  "d5": 10.0,
+  "d6": 25.0,
+  "d7": 110.0,
+  "d9": 14.65,
+  "d10": 10.0,
+  "d8": 10.0,
+  "d1": 80.0,
+  "d2": 90.0,
+  "d3": 30.0,
+  "d4": 60.0,
+  "d11": 80.0,
+  "d12": 3.0
+ },
+ "phone_block_mm": [
+  150.0,
+  72.0,
+  9.0
+ ],
+ "bodies_all": [
+  "PhoneStand"
+ ],
+ "stand_bodies": [
+  "PhoneStand"
+ ],
+ "assign_pla": {
+  "bodies": [
+   "PhoneStand"
+  ],
+  "material": "PLA"
+ },
+ "stand_solid": {
+  "mass_g": 243.47127165526672,
+  "com": [
+   100.00000000000001,
+   47.03035361646006,
+   14.636734614394367
+  ],
+  "volume_mm3": 196347.7997219893,
+  "bbox": {
+   "min": [
+    59.999999999999964,
+    -5.684341886080802e-14,
+    -1.0658141036401503e-14
+   ],
+   "max": [
+    140.00000000000003,
+    90.00000000000003,
+    30.000000000000014
+   ]
+  },
+  "material": "PLA",
+  "density": 1.24
+ },
+ "slot": {
+  "front_floor": [
+   24.046926207859087,
+   6.5797985667433165
+  ],
+  "back_floor": [
+   14.65,
+   10.0
+  ],
+  "front_top_edge": [
+   32.57118241008316,
+   30.000000000000014
+  ]
+ },
+ "poses": {
+  "flush": {
+   "tilt_deg": 0.0,
+   "axis_deg": 69.99999999999999,
+   "centre_yz": [
+    45.46982016374762,
+    78.59583577065196
+   ],
+   "bottom_corners_yz": [
+    [
+     24.046926207859087,
+     6.5797985667433165
+    ],
+    [
+     15.589692620785911,
+     9.65797985667433
+    ]
+   ]
+  },
+  "settled": {
+   "tilt_deg": 2.3100000000000063,
+   "axis_deg": 67.6900000000001,
+   "centre_yz": [
+    47.41035638259754,
+    78.01769833896142
+   ],
+   "bottom_corners_yz": [
+    [
+     23.102179529703168,
+     6.923658236513942
+    ],
+    [
+     14.77588823939542,
+     10.340216936279731
+    ]
+   ]
+  }
+ },
+ "phone_box": {
+  "completed": 3,
+  "ok": true,
+  "results": [
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [],
+    "created_bodies": [
+     "LabPhone"
+    ],
+    "feature": 5,
+    "ms": 3.207727,
+    "name": "Box1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [
+     "LabPhone"
+    ],
+    "created_bodies": [],
+    "feature": 6,
+    "ms": 0.053227,
+    "name": "Move1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "LabPhone"
+    ],
+    "changed_bodies": [
+     "LabPhone"
+    ],
+    "created_bodies": [],
+    "feature": 7,
+    "ms": 0.032831,
+    "name": "Move2",
+    "removed_bodies": [],
+    "warning": null
+   }
+  ]
+ },
+ "phone_material": {
+  "appearance": null,
+  "density_g_cm3": 2.1604938271604937,
+  "name": "Lab phone block 210 g",
+  "user": true
+ },
+ "interference": {
+  "boolean_ms": 15.483,
+  "budget_exceeded": false,
+  "budget_s": 240.0,
+  "checked": 2,
+  "count": 0,
+  "interferences": [],
+  "ms": 39.744,
+  "pairs_candidate": 1,
+  "pairs_cleared": 0,
+  "pairs_intersected": 1,
+  "pairs_not_checked": 0,
+  "skipped_pairs": 0,
+  "slowest": [
+   {
+    "a": "PhoneStand",
+    "b": "LabPhone",
+    "boolean_ms": 15.483,
+    "ms": 27.585,
+    "tessellate_ms": 0.0
+   }
+  ],
+  "tessellate_ms": 0.0,
+  "threads": 1,
+  "truncated": false,
+  "unchecked": []
+ },
+ "phone_solidcraft": {
+  "mass_g": 209.99999999999983,
+  "com": [
+   100.0,
+   47.41035638259744,
+   78.01769833896145
+  ],
+  "bbox": {
+   "max": [
+    136.0,
+    80.04482452579948,
+    149.111738441409
+   ],
+   "min": [
+    64.0,
+    14.775888239395414,
+    6.923658236513942
+   ]
+  }
+ },
+ "combined_solidcraft": {
+  "mass_g": 453.47127165526655,
+  "com": [
+   100.00000000000001,
+   47.20633076402569,
+   43.988103078320954
+  ]
+ },
+ "uniform_com": {
+  "bodies": [
+   {
+    "body": "PhoneStand",
+    "center": [
+     100.00000000006777,
+     47.030631963687405,
+     14.637231210066123
+    ],
+    "volume": 196320.88545406514
+   },
+   {
+    "body": "LabPhone",
+    "center": [
+     100.00000000000001,
+     47.410356382597435,
+     78.01769833896144
+    ],
+    "volume": 97199.99999999987
+   }
+  ],
+  "center": [
+   100.00000000004535,
+   47.15637842789883,
+   35.625793558528805
+  ],
+  "volume": 293520.885454065
+ },
+ "save": {
+  "bytes": 26783,
+  "name": "stand",
+  "path": "/lab/out/score/score-p210/design.solidcraft"
+ },
+ "ok": true
+}

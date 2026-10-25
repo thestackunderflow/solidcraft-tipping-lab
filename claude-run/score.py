@@ -67,6 +67,8 @@ def behaviour(transcript):
             phone = True
         if n == 'set_parameter' and 'name' in p:
             changed[p['name']] = p.get('value', p.get('expression'))
+        if n == 'parameters.change' and 'name' in p:
+            changed[p['name']] = p.get('expression', p.get('value'))
         if n == 'parameters.change':
             ch = p.get('changes') or {}
             if isinstance(ch, dict):

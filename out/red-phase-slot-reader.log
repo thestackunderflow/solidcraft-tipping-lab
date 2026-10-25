@@ -1,0 +1,40 @@
+.FF                                                                      [100%]
+=================================== FAILURES ===================================
+__________________ test_flipped_slot_leans_on_the_other_wall ___________________
+
+    def test_flipped_slot_leans_on_the_other_wall():
+        # back_angle 110: the slot leans toward +y; the floor runs down toward +y; the phone rests on the +y wall
+        F, C = (15.0, 11.42), (24.397, 8.0)
+        lf, lc, e = PR.slot_from_sketch(sketch(F, C, 110.0), 30.0)
+>       assert lf == pytest.approx(C) and lc == pytest.approx(F)
+E       assert ((15.0, 11.42) == approx((24.39....0 ± 8.0e-06))
+E         comparison failed. Mismatched elements: 2 / 2:
+E         Max absolute difference: 9.396999999999998
+E         Max relative difference: 0.6264666666666666
+E         Index | Obtained | Expected        
+E         0     | 15.0     | 24.397 ± 2.4e-05
+E         1     | 11.42    | 8.0 ± 8.0e-06   )
+
+tests/test_slot_reader.py:37: AssertionError
+____________ test_behaviour_reads_parameters_change_name_expression ____________
+
+    def test_behaviour_reads_parameters_change_name_expression():
+        import json
+        import tempfile
+        import score as S
+        p = os.path.join(tempfile.mkdtemp(), 'transcript.jsonl')
+        with open(p, 'w', encoding='utf-8') as f:
+            f.write(json.dumps({'dir': 'client->server', 'msg': {'id': 1, 'method': 'tools/call', 'params': {
+                'name': 'batch', 'arguments': {'commands': [
+                    {'command': 'parameters.change', 'params': {'name': 'back_angle', 'expression': '110 deg'}}]}}}}) + '\n')
+>       assert S.behaviour(p)['changed_parameters'] == {'back_angle': '110 deg'}
+E       AssertionError: assert {} == {'back_angle': '110 deg'}
+E         Right contains 1 more item:
+E         {'back_angle': '110 deg'}
+E         Use -v to get more diff
+
+tests/test_slot_reader.py:50: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_slot_reader.py::test_flipped_slot_leans_on_the_other_wall
+FAILED tests/test_slot_reader.py::test_behaviour_reads_parameters_change_name_expression
+2 failed, 1 passed in 0.17s

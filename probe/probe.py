@@ -78,13 +78,21 @@ def save(d, name, obj):
 
 
 def slot_from_sketch(sk, top_z):
+    """-> (floor corner on the side the slot leans to, the other floor corner, that wall's sharp top edge). The phone
+    leans on the wall on its lean side, whichever way a run set back_angle (part 1: toward -y, the front wall)."""
     pts = {p['id']: p['world'] for p in sk['points']}
-    F = (pts['l1.start'][1], pts['l1.start'][2])        # floor, front-wall end
-    C = (pts['l1.end'][1], pts['l1.end'][2])            # floor, back-wall end
-    up = (pts['l3.end'][1], pts['l3.end'][2])           # front wall, upper end (above the top: cut off by it)
-    t = (top_z - F[1]) / (up[1] - F[1])
-    E = (F[0] + t * (up[0] - F[0]), top_z)              # the front wall's sharp top edge
-    return F, C, E
+    A = (pts['l1.start'][1], pts['l1.start'][2])        # floor end of the wall through l3.end
+    B = (pts['l1.end'][1], pts['l1.end'][2])            # floor end of the wall through l2.end
+    upA = (pts['l3.end'][1], pts['l3.end'][2])
+    upB = (pts['l2.end'][1], pts['l2.end'][2])
+
+    def top(F, up):
+        t = (top_z - F[1]) / (up[1] - F[1])
+        return (F[0] + t * (up[0] - F[0]), top_z)
+    lean = upA[0] - A[0]                                # the walls' sideways run going up
+    if (lean < 0) == (A[0] < B[0]):                     # A is on the lean side
+        return A, B, top(A, upA)
+    return B, A, top(B, upB)
 
 
 def is_phone_body(b):
@@ -130,11 +138,12 @@ def run_cell(name, spec, design=DESIGN, out_root=OUT):
         res['poses'] = poses
         pose = poses['settled']
         x0 = (lo[0] + hi[0]) / 2 - W / 2
-        tilt_from_vertical = 90.0 - pose['axis_deg']
-        fy, fz = pose['bottom_corners_yz'][0]           # bottom-front corner
+        lean_minus_y = F[0] < C[0]                      # part 1: the phone leans toward -y
+        tilt_from_vertical = (90.0 - pose['axis_deg']) * (1 if lean_minus_y else -1)
+        fy, fz = pose['bottom_corners_yz'][0]           # bottom corner on the lean side
         res['phone_box'] = s.call('batch', {'commands': [
-            {'command': 'solid.box', 'params': {'length': W, 'width': T, 'height': L, 'corner': [x0, 0, 0],
-                                                'body_name': 'LabPhone'}},
+            {'command': 'solid.box', 'params': {'length': W, 'width': T, 'height': L,
+                                                'corner': [x0, 0 if lean_minus_y else -T, 0], 'body_name': 'LabPhone'}},
             {'command': 'solid.move', 'params': {'bodies': ['LabPhone'], 'axis': [1, 0, 0],
                                                  'angle': f'{tilt_from_vertical} deg'}},
             {'command': 'solid.move', 'params': {'bodies': ['LabPhone'], 'translate': [0, fy, fz]}},
