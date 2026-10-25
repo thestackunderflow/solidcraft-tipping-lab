@@ -1,0 +1,266 @@
+{
+ "cell": "lip15-p165",
+ "spec": {
+  "front_lip": 15.0,
+  "phone_thickness": 9.0,
+  "phone": "p165"
+ },
+ "phone_block_mm": [
+  150.0,
+  72.0,
+  9.0
+ ],
+ "phone_g": 165.0,
+ "utc": "2026-10-25T13:47:45+00:00",
+ "open": {
+  "errors": 0,
+  "features": 4,
+  "name": "stand",
+  "path": "/lab/out/lip15-p165/design.solidcraft"
+ },
+ "set_front_lip": {
+  "display_value": 15.0,
+  "errors": [],
+  "expression": "15",
+  "name": "front_lip",
+  "recomputed": 0,
+  "restored": 0,
+  "value": 15.0
+ },
+ "set_phone_thickness": {
+  "display_value": 9.0,
+  "errors": [],
+  "expression": "9",
+  "name": "phone_thickness",
+  "recomputed": 0,
+  "restored": 0,
+  "value": 9.0
+ },
+ "assign_pla": {
+  "bodies": [
+   "PhoneStand"
+  ],
+  "material": "PLA"
+ },
+ "stand_solid": {
+  "mass_g": 155.83427697509532,
+  "com": [
+   100.00000000000001,
+   31.94281121627541,
+   14.361500241345954
+  ],
+  "volume_mm3": 125672.80401217366,
+  "bbox": {
+   "max": [
+    140.00000000000003,
+    60.000000000000036,
+    30.000000000000007
+   ],
+   "min": [
+    59.999999999999986,
+    -5.684341886080802e-14,
+    -1.4210854715202004e-14
+   ]
+  },
+  "material": "PLA",
+  "density": 1.24
+ },
+ "slot": {
+  "front_floor": [
+   15.0,
+   8.0
+  ],
+  "back_floor": [
+   24.396926207859085,
+   11.420201433256684
+  ],
+  "front_top_edge": [
+   6.992654846143557,
+   30.000000000000007
+  ]
+ },
+ "poses": {
+  "flush": {
+   "tilt_deg": 0.0,
+   "axis_deg": 69.99999999999999,
+   "centre_yz": [
+    -6.422893955888544,
+    80.01603720390865
+   ],
+   "bottom_corners_yz": [
+    [
+     15.0,
+     8.0
+    ],
+    [
+     23.457233587073176,
+     11.078181289931017
+    ]
+   ]
+  },
+  "settled": {
+   "tilt_deg": 2.460000000000009,
+   "axis_deg": 67.5400000000001,
+   "centre_yz": [
+    -8.549064064494484,
+    79.37416545314667
+   ],
+   "bottom_corners_yz": [
+    [
+     15.945153034776652,
+     8.34400757148507
+    ],
+    [
+     24.262471271807982,
+     11.782352717619485
+    ]
+   ]
+  }
+ },
+ "phone_box": {
+  "completed": 3,
+  "ok": true,
+  "results": [
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [],
+    "created_bodies": [
+     "Phone"
+    ],
+    "feature": 5,
+    "ms": 2.551284,
+    "name": "Box1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [
+     "Phone"
+    ],
+    "created_bodies": [],
+    "feature": 6,
+    "ms": 0.07013699999999999,
+    "name": "Move1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [
+     "Phone"
+    ],
+    "created_bodies": [],
+    "feature": 7,
+    "ms": 0.050934,
+    "name": "Move2",
+    "removed_bodies": [],
+    "warning": null
+   }
+  ]
+ },
+ "phone_material": {
+  "appearance": null,
+  "density_g_cm3": 1.6975308641975309,
+  "name": "Phone block 165 g",
+  "user": true
+ },
+ "interference": {
+  "boolean_ms": 14.167,
+  "budget_exceeded": false,
+  "budget_s": 240.0,
+  "checked": 2,
+  "count": 0,
+  "interferences": [],
+  "ms": 39.732,
+  "pairs_candidate": 1,
+  "pairs_cleared": 0,
+  "pairs_intersected": 1,
+  "pairs_not_checked": 0,
+  "skipped_pairs": 0,
+  "slowest": [
+   {
+    "a": "PhoneStand",
+    "b": "Phone",
+    "boolean_ms": 14.167,
+    "ms": 26.588,
+    "tessellate_ms": 0.0
+   }
+  ],
+  "tessellate_ms": 0.0,
+  "threads": 1,
+  "truncated": false,
+  "unchecked": []
+ },
+ "combined_solidcraft": {
+  "mass_g": 320.83427697509524,
+  "com": [
+   100.00000000000001,
+   11.11847946370013,
+   47.79648686772755
+  ]
+ },
+ "phone_solidcraft": {
+  "mass_g": 164.99999999999991,
+  "com": [
+   100.0,
+   -8.549064064494354,
+   79.3741654531467
+  ],
+  "bbox": {
+   "max": [
+    136.0,
+    24.262471271807986,
+    150.40432333480834
+   ],
+   "min": [
+    64.0,
+    -41.3605994007967,
+    8.34400757148507
+   ]
+  }
+ },
+ "uniform_com": {
+  "bodies": [
+   {
+    "body": "PhoneStand",
+    "center": [
+     100.00000000009054,
+     31.943185705556758,
+     14.361932518194454
+    ],
+    "volume": 125648.58441144961
+   },
+   {
+    "body": "Phone",
+    "center": [
+     100.00000000000001,
+     -8.549064064494353,
+     79.3741654531467
+    ],
+    "volume": 97199.99999999994
+   }
+  ],
+  "center": [
+   100.00000000005106,
+   14.281656968258892,
+   42.71835693958596
+  ],
+  "volume": 222848.58441144956
+ },
+ "save": {
+  "bytes": 29889,
+  "name": "stand",
+  "path": "/lab/out/lip15-p165/design.solidcraft"
+ },
+ "ok": true
+}

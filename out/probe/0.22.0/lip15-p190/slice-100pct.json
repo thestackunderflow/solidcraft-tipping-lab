@@ -1,0 +1,26 @@
+{
+ "stl": "out/probe/0.22.0/lip15-p190/stand.stl",
+ "settings": {
+  "print_settings_id": null,
+  "layer_height": "0.2",
+  "perimeters": "2",
+  "fill_density": "100%",
+  "fill_pattern": "rectilinear",
+  "top_solid_layers": "5",
+  "bottom_solid_layers": "3",
+  "filament_density": "1.24",
+  "filament_diameter": "1.75",
+  "arc_fitting": "emit_center",
+  "skirts": "0",
+  "brim_width": "0"
+ },
+ "slicer_total_g": 156.04,
+ "time": "3h 14m 33s",
+ "part_g_from_gcode": 155.98,
+ "part_centre_from_gcode": [
+  124.999,
+  106.927,
+  14.465
+ ],
+ "note": "part_* counts beads from the first ;LAYER_CHANGE on (the purge line before it is left out); the G-code is centred at 125,105"
+}

@@ -1,0 +1,266 @@
+{
+ "cell": "lip35-p250",
+ "spec": {
+  "front_lip": 35.0,
+  "phone_thickness": 9.0,
+  "phone": "p250"
+ },
+ "phone_block_mm": [
+  163.0,
+  78.0,
+  9.0
+ ],
+ "phone_g": 250.0,
+ "utc": "2026-10-25T13:47:58+00:00",
+ "open": {
+  "errors": 0,
+  "features": 4,
+  "name": "stand",
+  "path": "/lab/out/lip35-p250/design.solidcraft"
+ },
+ "set_front_lip": {
+  "display_value": 35.0,
+  "errors": [],
+  "expression": "35",
+  "name": "front_lip",
+  "recomputed": 3,
+  "restored": 0,
+  "value": 35.0
+ },
+ "set_phone_thickness": {
+  "display_value": 9.0,
+  "errors": [],
+  "expression": "9",
+  "name": "phone_thickness",
+  "recomputed": 0,
+  "restored": 0,
+  "value": 9.0
+ },
+ "assign_pla": {
+  "bodies": [
+   "PhoneStand"
+  ],
+  "material": "PLA"
+ },
+ "stand_solid": {
+  "mass_g": 155.83427697509535,
+  "com": [
+   100.00000000000001,
+   29.193823797034252,
+   14.361500241345954
+  ],
+  "volume_mm3": 125672.80401217367,
+  "bbox": {
+   "max": [
+    140.00000000000003,
+    60.000000000000036,
+    30.000000000000007
+   ],
+   "min": [
+    59.999999999999986,
+    -5.684341886080802e-14,
+    -1.4210854715202004e-14
+   ]
+  },
+  "material": "PLA",
+  "density": 1.24
+ },
+ "slot": {
+  "front_floor": [
+   35.0,
+   8.0
+  ],
+  "back_floor": [
+   44.39692620785908,
+   11.420201433256684
+  ],
+  "front_top_edge": [
+   26.99265484614355,
+   30.000000000000007
+  ]
+ },
+ "poses": {
+  "flush": {
+   "tilt_deg": 0.0,
+   "axis_deg": 69.99999999999999,
+   "centre_yz": [
+    11.353975112494602,
+    86.12403923901705
+   ],
+   "bottom_corners_yz": [
+    [
+     35.0,
+     8.0
+    ],
+    [
+     43.457233587073176,
+     11.078181289931017
+    ]
+   ]
+  },
+  "settled": {
+   "tilt_deg": 2.460000000000009,
+   "axis_deg": 67.54000000000028,
+   "centre_yz": [
+    8.967686663297318,
+    85.38111751322486
+   ],
+   "bottom_corners_yz": [
+    [
+     35.94515303477665,
+     8.34400757148507
+    ],
+    [
+     44.26247127180798,
+     11.782352717619487
+    ]
+   ]
+  }
+ },
+ "phone_box": {
+  "completed": 3,
+  "ok": true,
+  "results": [
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [],
+    "created_bodies": [
+     "Phone"
+    ],
+    "feature": 5,
+    "ms": 3.1455319999999998,
+    "name": "Box1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [
+     "Phone"
+    ],
+    "created_bodies": [],
+    "feature": 6,
+    "ms": 0.049961,
+    "name": "Move1",
+    "removed_bodies": [],
+    "warning": null
+   },
+   {
+    "bodies": [
+     "PhoneStand",
+     "Phone"
+    ],
+    "changed_bodies": [
+     "Phone"
+    ],
+    "created_bodies": [],
+    "feature": 7,
+    "ms": 0.033507,
+    "name": "Move2",
+    "removed_bodies": [],
+    "warning": null
+   }
+  ]
+ },
+ "phone_material": {
+  "appearance": null,
+  "density_g_cm3": 2.184818135738381,
+  "name": "Phone block 250 g",
+  "user": true
+ },
+ "interference": {
+  "boolean_ms": 15.606,
+  "budget_exceeded": false,
+  "budget_s": 240.0,
+  "checked": 2,
+  "count": 0,
+  "interferences": [],
+  "ms": 41.19,
+  "pairs_candidate": 1,
+  "pairs_cleared": 0,
+  "pairs_intersected": 1,
+  "pairs_not_checked": 0,
+  "skipped_pairs": 0,
+  "slowest": [
+   {
+    "a": "PhoneStand",
+    "b": "Phone",
+    "boolean_ms": 15.606,
+    "ms": 27.961,
+    "tessellate_ms": 0.0
+   }
+  ],
+  "tessellate_ms": 0.0,
+  "threads": 1,
+  "truncated": false,
+  "unchecked": []
+ },
+ "combined_solidcraft": {
+  "mass_g": 405.8342769750952,
+  "com": [
+   100.0,
+   16.73422003679189,
+   58.1106494021974
+  ]
+ },
+ "phone_solidcraft": {
+  "mass_g": 249.99999999999983,
+  "com": [
+   100.0,
+   8.96768666329769,
+   85.38111751322495
+  ],
+  "bbox": {
+   "max": [
+    139.0,
+    44.262471271807996,
+    162.4182274549649
+   ],
+   "min": [
+    61.0,
+    -26.327097945212635,
+    8.34400757148507
+   ]
+  }
+ },
+ "uniform_com": {
+  "bodies": [
+   {
+    "body": "PhoneStand",
+    "center": [
+     100.0000000000905,
+     29.193668400698492,
+     14.361932518194452
+    ],
+    "volume": 125648.58441144961
+   },
+   {
+    "body": "Phone",
+    "center": [
+     100.0,
+     8.967686663297696,
+     85.38111751322498
+    ],
+    "volume": 114425.99999999993
+   }
+  ],
+  "center": [
+   100.00000000004735,
+   19.55342184166521,
+   48.21158504248638
+  ],
+  "volume": 240074.58441144956
+ },
+ "save": {
+  "bytes": 30358,
+  "name": "stand",
+  "path": "/lab/out/lip35-p250/design.solidcraft"
+ },
+ "ok": true
+}
