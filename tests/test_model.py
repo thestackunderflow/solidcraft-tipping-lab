@@ -47,3 +47,15 @@ def test_hook_variant_from_the_band():
     assert M.hook_variant(sliced_min=-5.0, sliced_max=-2.0, solid_min=4.0) == 'A'
     assert M.hook_variant(sliced_min=-1.0, sliced_max=1.5, solid_min=4.0) == 'B'
     assert M.hook_variant(sliced_min=0.5, sliced_max=3.0, solid_min=8.0) == 'C'
+
+
+def test_tipping_edge_any_direction():
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'probe'))
+    import analyse as A
+    rect = [(63, 3), (137, 3), (137, 57), (63, 57)]
+    a, b = A.tipping_edge(rect, -8.5, 100.0)
+    assert a[1] == pytest.approx(3) and b[1] == pytest.approx(3)
+    # a base with an angled front (a run may chamfer it): the edge facing the phone is still chosen
+    octo = [(70, 3), (130, 3), (137, 10), (137, 57), (63, 57), (63, 10)]
+    a, b = A.tipping_edge(octo, -8.5, 100.0)
+    assert {round(a[1], 3), round(b[1], 3)} == {3.0}

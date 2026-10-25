@@ -30,16 +30,25 @@ def gcode_back_to_model(centre, stl_tris, at=(125.0, 105.0)):
     return [centre[0] - (at[0] - cx), centre[1] - (at[1] - cy), centre[2]]
 
 
-def tipping_edge(poly, phone_y):
-    """The footprint edge the phone leans over: the edge whose line is nearest the phone's balance point in y."""
+def tipping_edge(poly, phone_y, phone_x=None):
+    """The footprint edge the phone leans over: of the hull's edges (any direction: a run may round or angle the base),
+    the one whose outward normal points most toward the phone's balance point, seen from the footprint's middle."""
     hull = P._hull(poly)
+    cx = sum(p[0] for p in hull) / len(hull)
+    cy = sum(p[1] for p in hull) / len(hull)
+    px = cx if phone_x is None else phone_x
+    dx, dy = px - cx, phone_y - cy
     best = None
     for i in range(len(hull)):
         a, b = hull[i], hull[(i + 1) % len(hull)]
-        if abs(a[1] - b[1]) < 1e-6:   # an edge along x (front or back)
-            d = abs(a[1] - phone_y)
-            if best is None or d < best[0]:
-                best = (d, (a, b))
+        ex, ey = b[0] - a[0], b[1] - a[1]
+        n = math.hypot(ex, ey)
+        if n < 1e-9:
+            continue
+        nx, ny = ey / n, -ex / n                     # outward for a counter-clockwise hull
+        score = nx * dx + ny * dy
+        if best is None or score > best[0]:
+            best = (score, (a, b))
     return best[1]
 
 
