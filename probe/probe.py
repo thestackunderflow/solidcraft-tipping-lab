@@ -1,19 +1,19 @@
 """THE PROBE (no AI, $0): part 1's phone stand with a phone-sized block in its slot, in SolidCraft 0.22.0, over MCP,
 behind the logging proxy (every request/reply in <cell>/transcript.jsonl, which the video's tool-call panels cite).
+The same run_cell() scores Claude's designs (claude-run/score.py): it only reads a design, it never trusts a reply.
 
     docker run --rm -v <lab>:/work -v <lab>/out/probe/0.22.0:/lab/out -w /work solidcraft-tipping-lab:0.22.0 \
         python3 probe/probe.py CELL [CELL ...]
 
-A cell = (front_lip, phone_thickness, phone block length x width x thickness, phone grams). Per cell:
-  open part 1's design (a copy), set the named sizes, give the stand built-in PLA (1.24 g/cm3), read the slot sketch,
-  place the phone block at the settled pose (tip/physics.py slot_pose: it leans on the slot's sharp top edge and slides
-  into the play), give it a material that makes its grams, check SolidCraft finds no overlap, ask for mass + balance
-  point both ways (component.properties: reads the materials; inspect.center_of_mass: uniform density), export the
-  stand and the phone as STL, save the design, and write pose.json + props.json. Slicing and the margin table happen
-  after, outside SolidCraft (slicer/slice.sh, probe/analyse.py)."""
+A cell = (a design file, optional named sizes to set, a phone block). Per cell: open a copy of the design, set the
+named sizes, give every stand body built-in PLA (1.24 g/cm3; the stand = every body not named like a phone, so a phone
+body Claude added to measure is left out), read the slot sketch, place a phone block at the settled pose (tip/physics.py
+slot_pose: it leans on the slot's sharp top edge and slides into the play), give it a material that makes its grams,
+check SolidCraft finds no overlap, read mass + balance point both ways (component.properties: reads the materials;
+inspect.center_of_mass: uniform density), export the stand and the block as STL, save, write cell.json. Slicing and the
+margin table happen after, outside SolidCraft (probe/slice_cells.sh, probe/analyse.py)."""
 import datetime
 import json
-import math
 import os
 import shutil
 import sys
@@ -27,7 +27,7 @@ from tip import physics as P  # noqa: E402
 OUT = '/lab/out'
 PROXY = os.path.join(LAB, 'proxy', 'mcp_log_proxy.py')
 DESIGN = os.path.join(LAB, 'data', 'part1-stand.solidcraft')
-PHONES = {  # name: (length, width, grams); thickness = phone_thickness (bare 9, cased 12)
+PHONES = {  # name: (length, width, grams); thickness = the design's phone_thickness (bare 9) unless a cell sets it
     'p165': (150.0, 72.0, 165.0), 'p190': (150.0, 72.0, 190.0), 'p210': (150.0, 72.0, 210.0),
     'p250': (163.0, 78.0, 250.0),
 }
@@ -42,6 +42,9 @@ def cells():
         c[f'lip{lip}-p190'] = dict(front_lip=float(lip), phone_thickness=9.0, phone='p190')
     for lip in (15, 30, 35, 40, 45):
         c[f'lip{lip}-p250-case'] = dict(front_lip=float(lip), phone_thickness=12.0, phone='p250')
+    for lip in (15, 40):   # a slot sized for a phone in a case (12 mm), with the bare phone in it: the most lean
+        c[f'lip{lip}-p190-caseoff'] = dict(front_lip=float(lip), phone_thickness=12.0, block_thickness=9.0, phone='p190')
+        c[f'lip{lip}-p250-caseoff'] = dict(front_lip=float(lip), phone_thickness=12.0, block_thickness=9.0, phone='p250')
     return c
 
 
@@ -81,69 +84,88 @@ def slot_from_sketch(sk, top_z):
     return F, C, E
 
 
-def run_cell(name, spec):
-    d = os.path.join(OUT, name)
+def is_phone_body(b):
+    return 'phone' in b['name'].lower() and b['name'].lower() != 'phonestand'
+
+
+def run_cell(name, spec, design=DESIGN, out_root=OUT):
+    d = os.path.join(out_root, name)
     os.makedirs(d, exist_ok=True)
     L, W, g = PHONES[spec['phone']]
-    T = spec['phone_thickness']
-    res = {'cell': name, 'spec': spec, 'phone_block_mm': [L, W, T], 'phone_g': g,
+    res = {'cell': name, 'spec': spec, 'design_in': os.path.basename(design), 'phone_g': g,
            'utc': datetime.datetime.now(datetime.timezone.utc).isoformat(timespec='seconds')}
-    shutil.copy(DESIGN, os.path.join(d, 'design.solidcraft'))
+    shutil.copy(design, os.path.join(d, 'design.solidcraft'))
     s = Session(os.path.join(d, 'transcript.jsonl'))
     try:
-        res['open'] = s.call('open', {'path': f'{OUT}/{name}/design.solidcraft'})
+        res['open'] = s.call('open', {'path': f'{d}/design.solidcraft'})
         for pname in ('front_lip', 'phone_thickness'):
             if pname in spec:
                 res[f'set_{pname}'] = s.call('set_parameter', {'name': pname, 'value': spec[pname]})
-        res['assign_pla'] = s.ex('material.assign', {'bodies': ['PhoneStand'], 'material': 'PLA'})
-        m = s.call('measure', {'body': 'PhoneStand'})
-        b = m['bodies'][0]
-        res['stand_solid'] = {'mass_g': b['mass_g'], 'com': b['center_of_mass'], 'volume_mm3': b['volume_mm3'],
-                              'bbox': b['bbox'], 'material': b['material'], 'density': b['density_g_cm3']}
-        top_z = b['bbox']['max'][2]
+        plist = s.ex('parameters.list', {})
+        params = {p['name']: p['value'] for p in plist.get('parameters', [])} if isinstance(plist, dict) else {}
+        res['parameters'] = params
+        T = float(spec.get('block_thickness', spec.get('phone_thickness', params.get('phone_thickness', 9.0))))
+        res['phone_block_mm'] = [L, W, T]
+        allb = s.call('measure', {})['bodies']
+        res['bodies_all'] = [b['name'] for b in allb]
+        res['stand_bodies'] = [b['name'] for b in allb if not is_phone_body(b)]
+        res['assign_pla'] = s.ex('material.assign', {'bodies': res['stand_bodies'], 'material': 'PLA'})
+        stand = [b for b in s.call('measure', {})['bodies'] if b['name'] in res['stand_bodies']]
+        mass = sum(b['mass_g'] for b in stand)
+        com = [sum(b['mass_g'] * b['center_of_mass'][i] for b in stand) / mass for i in range(3)]
+        lo = [min(b['bbox']['min'][i] for b in stand) for i in range(3)]
+        hi = [max(b['bbox']['max'][i] for b in stand) for i in range(3)]
+        res['stand_solid'] = {'mass_g': mass, 'com': com, 'volume_mm3': sum(b['volume_mm3'] for b in stand),
+                              'bbox': {'min': lo, 'max': hi}, 'material': 'PLA', 'density': 1.24}
         sk = s.ex('sketch.inspect', {'sketch': 'SlotProfile'})
-        F, C, E = slot_from_sketch(sk, top_z)
+        if not isinstance(sk, dict) or 'points' not in sk:
+            res['error'] = 'no SlotProfile sketch: score by hand'
+            raise RuntimeError(res['error'])
+        F, C, E = slot_from_sketch(sk, hi[2])
         res['slot'] = {'front_floor': F, 'back_floor': C, 'front_top_edge': E}
         poses = {k: P.slot_pose(F, C, E, T, L, lean=k) for k in ('flush', 'settled')}
         res['poses'] = poses
         pose = poses['settled']
-        x0 = (b['bbox']['min'][0] + b['bbox']['max'][0]) / 2 - W / 2
+        x0 = (lo[0] + hi[0]) / 2 - W / 2
         tilt_from_vertical = 90.0 - pose['axis_deg']
         fy, fz = pose['bottom_corners_yz'][0]           # bottom-front corner
         res['phone_box'] = s.call('batch', {'commands': [
             {'command': 'solid.box', 'params': {'length': W, 'width': T, 'height': L, 'corner': [x0, 0, 0],
-                                                'body_name': 'Phone'}},
-            {'command': 'solid.move', 'params': {'bodies': ['Phone'], 'axis': [1, 0, 0],
+                                                'body_name': 'LabPhone'}},
+            {'command': 'solid.move', 'params': {'bodies': ['LabPhone'], 'axis': [1, 0, 0],
                                                  'angle': f'{tilt_from_vertical} deg'}},
-            {'command': 'solid.move', 'params': {'bodies': ['Phone'], 'translate': [0, fy, fz]}},
+            {'command': 'solid.move', 'params': {'bodies': ['LabPhone'], 'translate': [0, fy, fz]}},
         ]})
-        vol_cm3 = L * W * T / 1000.0
-        mat = f'Phone block {int(g)} g'
-        res['phone_material'] = s.ex('material.create', {'name': mat, 'density_g_cm3': g / vol_cm3})
-        s.ex('material.assign', {'bodies': ['Phone'], 'material': mat})
-        res['interference'] = s.ex('inspect.interference', {'bodies': ['PhoneStand', 'Phone']})
+        mat = f'Lab phone block {int(g)} g'
+        res['phone_material'] = s.ex('material.create', {'name': mat, 'density_g_cm3': g / (L * W * T / 1000.0)})
+        s.ex('material.assign', {'bodies': ['LabPhone'], 'material': mat})
+        res['interference'] = s.ex('inspect.interference', {'bodies': res['stand_bodies'] + ['LabPhone']})
         props = s.ex('component.properties', {})
-        res['combined_solidcraft'] = {'mass_g': props['total']['mass_g'], 'com': props['total']['center_of_mass']}
-        pb = [x for x in props['bodies'] if x['name'] == 'Phone'][0]
+        mine = [x for x in props['bodies'] if x['name'] in res['stand_bodies'] + ['LabPhone']]
+        pb = [x for x in mine if x['name'] == 'LabPhone'][0]
         res['phone_solidcraft'] = {'mass_g': pb['mass_g'], 'com': pb['center_of_mass'], 'bbox': pb['bbox']}
-        res['uniform_com'] = s.ex('inspect.center_of_mass', {})
-        s.call('export', {'path': f'{OUT}/{name}/stand.stl', 'bodies': ['PhoneStand']})
-        s.call('export', {'path': f'{OUT}/{name}/phone.stl', 'bodies': ['Phone']})
-        res['save'] = s.call('save', {'path': f'{OUT}/{name}/design.solidcraft'})
+        mt = sum(x['mass_g'] for x in mine)
+        res['combined_solidcraft'] = {'mass_g': mt, 'com': [sum(x['mass_g'] * x['center_of_mass'][i] for x in mine) / mt
+                                                            for i in range(3)]}
+        res['uniform_com'] = s.ex('inspect.center_of_mass', {'bodies': res['stand_bodies'] + ['LabPhone']})
+        s.call('export', {'path': f'{d}/stand.stl', 'bodies': res['stand_bodies']})
+        s.call('export', {'path': f'{d}/phone.stl', 'bodies': ['LabPhone']})
+        res['save'] = s.call('save', {'path': f'{d}/design.solidcraft'})
         res['ok'] = True
     except Hang as e:
+        res['ok'] = False
         res['HANG'] = str(e)
     except Exception as e:  # recorded, not hidden
         res['ok'] = False
-        res['error'] = repr(e)
+        res.setdefault('error', repr(e))
     finally:
         s.close()
     save(d, 'cell.json', res)
-    keep = ('cell', 'ok', 'error')
-    print(json.dumps({k: res.get(k) for k in keep} | {
-        'stand_g': round(res.get('stand_solid', {}).get('mass_g', float('nan')), 2),
-        'overlaps': (res.get('interference') or {}).get('count') if isinstance(res.get('interference'), dict) else None,
-        'combined_com': res.get('combined_solidcraft', {}).get('com')}), flush=True)
+    inter = res.get('interference')
+    print(json.dumps({'cell': res['cell'], 'ok': res.get('ok'), 'error': res.get('error'),
+                      'stand_g': round(res.get('stand_solid', {}).get('mass_g', float('nan')), 2),
+                      'overlaps': inter.get('count') if isinstance(inter, dict) else None,
+                      'combined_com': res.get('combined_solidcraft', {}).get('com')}), flush=True)
     return res
 
 

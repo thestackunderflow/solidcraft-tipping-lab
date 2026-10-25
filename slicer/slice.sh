@@ -2,7 +2,7 @@
 # Slice an STL headlessly with PrusaSlicer 2.9.2 (image habs-slicer:0.2) using the BUNDLED stock presets, resolved from
 # the vendor bundle by slicer/resolve_preset.py (the CLI can't load them by name without a datadir):
 #   printer "Original Prusa MK4S 0.4 nozzle", print "0.20mm SPEED @MK4S 0.4", material "Prusament PLA @MK4S"
-# (arc fitting off, as in the preset), plus an optional settings strip (walls, infill %, pattern) for the sensitivity
+# (arc fitting ON, "emit_center", as in the preset: the G-code has G2/G3 arcs, which tip/gcode_mass.py counts), plus an optional settings strip (walls, infill %, pattern) for the sensitivity
 # rows. Writes <out>/<name>.gcode + <name>.json (grams, time, the print's balance point from tip/gcode_mass.py).
 #   bash slicer/slice.sh STL OUTDIR NAME [--perimeters N] [--fill-density P%] [--fill-pattern X]
 set -euo pipefail

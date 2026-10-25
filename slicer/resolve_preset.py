@@ -46,6 +46,7 @@ def flat_config(secs, print_name, filament_name, printer_name):
     for kind, name in (('printer', printer_name), ('filament', filament_name), ('print', print_name)):
         if name:
             merged.update(resolve(secs, kind, name))
+            merged[f'{kind}_settings_id'] = name     # so the G-code names the preset it came from
     head = f'# resolved: print "{print_name}", filament "{filament_name}", printer "{printer_name}"\n'
     return head + '\n'.join(f'{k} = {v}' for k, v in sorted(merged.items())) + '\n'
 

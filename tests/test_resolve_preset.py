@@ -50,3 +50,4 @@ def test_flat_config_has_every_key_once():
     keys = [l.split(' = ', 1)[0] for l in lines]
     assert len(keys) == len(set(keys))
     assert 'filament_density = 1.24' in lines and 'perimeters = 2' in lines
+    assert 'print_settings_id = 0.20mm SPEED' in lines and 'filament_settings_id = PLA' in lines
